@@ -1,7 +1,0 @@
-/./manifest.json
-//trackmyrun.apparmor
-/./assets/logo.svg
-/./trackmyrun
-//trackmyrun.desktop
-/lib/aarch64-linux-gnu/Example/libExample.so
-/lib/aarch64-linux-gnu/Example/qmldir
