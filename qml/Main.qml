@@ -61,6 +61,7 @@ MainView {
             id: qtObject
 
             property double longtitude : geoposition.position.coordinate.longitude
+            property double latitude : geoposition.position.coordinate.latitude
         }
 
         WebEngineView {

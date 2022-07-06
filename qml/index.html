@@ -29,9 +29,8 @@
             [51.51, -0.047]
         ]).addTo(map).bindPopup('I am a polygon.');
 
-
         var popup = L.popup()
-            .setLatLng([51.513, -0.09])
+            .setLatLng([51.043, -0.09])
             .setContent('I am a standalone popup.')
             .openOn(map);
 
@@ -44,15 +43,19 @@
 
         map.on('click', onMapClick);    
 
-        var getal = 6;
-
         myObj.longtitudeChanged.connect(function(){
-            document.getElementById("gpscheck").innerHTML = "getal:"+getal+">>"+myObj.longtitude;
-            getal++;
+            document.getElementById("longtitude").innerHTML = "Longtitude: " + myObj.longtitude;
+            popup.setLatLng([myObj.latitude, myObj.longtitude])
+            .setContent('This is my GPS position')
+        })
+
+        myObj.latitudeChanged.connect(function(){
+            document.getElementById("latitude").innerHTML = "Latitude: " + myObj.latitude;
         })
     })
 </script>
 
-<span id="gpscheck">a</span>
+<span id="longtitude">Longtitude: ...</span>
+<span id="latitude">Latitude: ...</span>
 
-<div id="map" style="width: 600px; height: 400px;"></div>
+<div id="map" style="width: 100%; height: 80%;"></div>
