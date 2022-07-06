@@ -16,7 +16,7 @@
         var marker = L.marker([55.5, -0.09]).addTo(map)
             .bindPopup('<b>Hello world!</b><br />I am a popup.').openPopup();
 
-        var circle = L.circle([51.508, -0.11], {
+        var locationmarker = L.circle([51.508, -0.11], {
             color: 'red',
             fillColor: '#f03',
             fillOpacity: 0.5,
@@ -45,8 +45,9 @@
 
         myObj.longtitudeChanged.connect(function(){
             document.getElementById("longtitude").innerHTML = "Longtitude: " + myObj.longtitude;
-            popup.setLatLng([myObj.latitude, myObj.longtitude])
-            .setContent('This is my GPS position')
+            locationmarker.setLatLng([myObj.latitude, myObj.longtitude]);
+            locationmarker.redraw();
+            map.setView([myObj.latitude, myObj.longtitude],13);
         })
 
         myObj.latitudeChanged.connect(function(){
