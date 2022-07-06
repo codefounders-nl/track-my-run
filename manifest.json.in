@@ -1,0 +1,15 @@
+{
+    "name": "trackmyrun.slft",
+    "description": "Track your runs on Ubuntu Touch",
+    "architecture": "@CLICK_ARCH@",
+    "title": "Track My Run",
+    "hooks": {
+        "trackmyrun": {
+            "apparmor": "trackmyrun.apparmor",
+            "desktop":  "trackmyrun.desktop"
+        }
+    },
+    "version": "1.0.0",
+    "maintainer": "SLFT <info@codefounders.nl>",
+    "framework" : "@CLICK_FRAMEWORK@"
+}

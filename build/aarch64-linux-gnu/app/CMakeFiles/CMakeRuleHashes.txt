@@ -1,0 +1,7 @@
+# Hashes of file build rules.
+51bf82f1e1ebaafb741bf26a3f15192d CMakeFiles/trackmyrun.desktop
+0062e41bff4abe67d2b9b96f5b5831a6 CMakeFiles/trackmyrun_automoc
+f2b55b5555094c8dd487736654faa88c plugins/Example/CMakeFiles/Example_automoc
+012f79fd63bba05268ff886b02017d6e po/CMakeFiles/trackmyrun.slft.pot
+fa3fa140bcc9024e1c160b185d310c01 qrc_assets.cpp
+ac92387e121e3cbbc88752036ddc7445 qrc_qml.cpp

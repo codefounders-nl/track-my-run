@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Track My Run
+Exec=trackmyrun %U
+Icon=assets/logo.svg
+Terminal=false
+Type=Application
+X-Ubuntu-Touch=true

@@ -1,0 +1,17 @@
+<script type="text/javascript" src="qrc:///qtwebchannel/qwebchannel.js"></script>
+
+<script>
+    new QWebChannel(qt.webChannelTransport, function(channel) {
+        var myObj = channel.objects.qtObject;
+    
+
+        var getal = 6;
+
+        myObj.longtitudeChanged.connect(function(){
+            document.getElementById("gpscheck").innerHTML = "getal:"+getal+">>"+myObj.longtitude;
+            getal++;
+        })
+    })
+</script>
+
+<span id="gpscheck">a</span>
