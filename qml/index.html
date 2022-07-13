@@ -20,7 +20,7 @@
             color: 'red',
             fillColor: '#f03',
             fillOpacity: 0.5,
-            radius: 500
+            radius: 100
         }).addTo(map).bindPopup('I am a circle.');
 
         var polygon = L.polygon([
@@ -39,24 +39,36 @@
                 .setLatLng(e.latlng)
                 .setContent('You clicked the map at ' + e.latlng.toString())
                 .openOn(map);
+            
         }
-
+        counter = 0;
+        tc = 0;
+        function onMapMove(e){
+            if(counter != 0){
+                myObj.centerLockMode = false;
+            }
+            document.getElementById("logsvf").innerHTML = "er is gemoved"+myObj.centerLockMode+"-"+counter+">>tc:"+tc+ "-evt:";
+            counter = 1;
+            tc++;
+        }
         map.on('click', onMapClick);    
-
-        myObj.longtitudeChanged.connect(function(){
+        map.on('moveend', onMapMove);
+        
+        myObj.onRefresh.connect(function(){
             document.getElementById("longtitude").innerHTML = "Longtitude: " + myObj.longtitude;
+            document.getElementById("latitude").innerHTML = "Latitude: " + myObj.latitude;
             locationmarker.setLatLng([myObj.latitude, myObj.longtitude]);
             locationmarker.redraw();
-            map.setView([myObj.latitude, myObj.longtitude],13);
+            if(myObj.centerLockMode){
+                map.setView([myObj.latitude, myObj.longtitude],myObj.zoomFactor);
+            }
+            L.circle([myObj.latitude, myObj.longtitude], {radius:1}).addTo(map);
         })
 
-        myObj.latitudeChanged.connect(function(){
-            document.getElementById("latitude").innerHTML = "Latitude: " + myObj.latitude;
-        })
     })
 </script>
 
 <span id="longtitude">Longtitude: ...</span>
 <span id="latitude">Latitude: ...</span>
-
+<span id="logsvf"></span>
 <div id="map" style="width: 100%; height: 80%;"></div>
