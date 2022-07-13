@@ -65,10 +65,15 @@ MainView {
             property int zoomFactor : zoomSlider.value
             property double longtitude : geoposition.position.coordinate.longitude
             property double latitude : geoposition.position.coordinate.latitude
+            property bool centerLockMode : centerLock.checked
 
             onZoomFactorChanged: onRefresh()
             onLongtitudeChanged: onRefresh()
             onLatitudeChanged: onRefresh()
+            onCenterLockModeChanged: {
+                onRefresh();
+                centerLock.checked = centerLockMode;
+            }
         }
 
         WebEngineView {
@@ -90,13 +95,24 @@ MainView {
             minimumValue: 3
             stepSize: 1
             value: 16
-            width: parent.width
+            width: parent.width - centerLock.width
             anchors {
                 bottom: parent.bottom 
                 bottomMargin: units.gu(2)
 //                topMargin: header.height
             }
 
+        }
+        Switch{
+            id: centerLock
+
+            checked: true
+            anchors{
+                bottom: parent.bottom 
+                bottomMargin: units.gu(2)
+                left: zoomSlider.right
+                rightMargin: units.gu(2)
+            }
         }
     }
 }

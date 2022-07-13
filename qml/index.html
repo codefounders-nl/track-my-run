@@ -39,16 +39,30 @@
                 .setLatLng(e.latlng)
                 .setContent('You clicked the map at ' + e.latlng.toString())
                 .openOn(map);
+            
         }
-
+        counter = 0;
+        tc = 0;
+        function onMapMove(e){
+            if(counter != 0){
+                myObj.centerLockMode = false;
+            }
+            document.getElementById("logsvf").innerHTML = "er is gemoved"+myObj.centerLockMode+"-"+counter+">>tc:"+tc+ "-evt:";
+            counter = 1;
+            tc++;
+        }
         map.on('click', onMapClick);    
-
+        map.on('moveend', onMapMove);
+        
         myObj.onRefresh.connect(function(){
             document.getElementById("longtitude").innerHTML = "Longtitude: " + myObj.longtitude;
             document.getElementById("latitude").innerHTML = "Latitude: " + myObj.latitude;
             locationmarker.setLatLng([myObj.latitude, myObj.longtitude]);
             locationmarker.redraw();
-            map.setView([myObj.latitude, myObj.longtitude],myObj.zoomFactor);
+            if(myObj.centerLockMode){
+                map.setView([myObj.latitude, myObj.longtitude],myObj.zoomFactor);
+            }
+            L.circle([myObj.latitude, myObj.longtitude], {radius:1}).addTo(map);
         })
 
     })
@@ -56,5 +70,5 @@
 
 <span id="longtitude">Longtitude: ...</span>
 <span id="latitude">Latitude: ...</span>
-
+<span id="logsvf"></span>
 <div id="map" style="width: 100%; height: 80%;"></div>
