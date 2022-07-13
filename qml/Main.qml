@@ -69,11 +69,26 @@ MainView {
             webChannel: myWebChannel
 
             anchors {
-                fill: parent
+                fill: parent 
+                bottomMargin: zoomSlider.height
                 topMargin: header.height
             }
 
             url: "index.html"
+        }
+        Slider{
+
+            id: zoomSlider
+            maximumValue: 25
+            minimumValue: 3
+            stepSize: 1
+            value: 16
+            width: parent.width
+            anchors {
+                bottom: parent.bottom 
+
+//                topMargin: header.height
+            }
         }
     }
 }

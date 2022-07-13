@@ -20,7 +20,7 @@
             color: 'red',
             fillColor: '#f03',
             fillOpacity: 0.5,
-            radius: 500
+            radius: 100
         }).addTo(map).bindPopup('I am a circle.');
 
         var polygon = L.polygon([
@@ -47,7 +47,7 @@
             document.getElementById("longtitude").innerHTML = "Longtitude: " + myObj.longtitude;
             locationmarker.setLatLng([myObj.latitude, myObj.longtitude]);
             locationmarker.redraw();
-            map.setView([myObj.latitude, myObj.longtitude],13);
+            map.setView([myObj.latitude, myObj.longtitude],16);
         })
 
         myObj.latitudeChanged.connect(function(){
