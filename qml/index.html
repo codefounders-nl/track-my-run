@@ -43,16 +43,14 @@
 
         map.on('click', onMapClick);    
 
-        myObj.longtitudeChanged.connect(function(){
+        myObj.onRefresh.connect(function(){
             document.getElementById("longtitude").innerHTML = "Longtitude: " + myObj.longtitude;
+            document.getElementById("latitude").innerHTML = "Latitude: " + myObj.latitude;
             locationmarker.setLatLng([myObj.latitude, myObj.longtitude]);
             locationmarker.redraw();
-            map.setView([myObj.latitude, myObj.longtitude],16);
+            map.setView([myObj.latitude, myObj.longtitude],myObj.zoomFactor);
         })
 
-        myObj.latitudeChanged.connect(function(){
-            document.getElementById("latitude").innerHTML = "Latitude: " + myObj.latitude;
-        })
     })
 </script>
 

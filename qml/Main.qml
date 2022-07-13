@@ -60,8 +60,15 @@ MainView {
         QtObject {
             id: qtObject
 
+            signal onRefresh()
+
+            property int zoomFactor : zoomSlider.value
             property double longtitude : geoposition.position.coordinate.longitude
             property double latitude : geoposition.position.coordinate.latitude
+
+            onZoomFactorChanged: onRefresh()
+            onLongtitudeChanged: onRefresh()
+            onLatitudeChanged: onRefresh()
         }
 
         WebEngineView {
@@ -86,9 +93,10 @@ MainView {
             width: parent.width
             anchors {
                 bottom: parent.bottom 
-
+                bottomMargin: units.gu(2)
 //                topMargin: header.height
             }
+
         }
     }
 }
