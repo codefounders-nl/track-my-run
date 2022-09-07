@@ -75,18 +75,28 @@ MainView {
                 centerLock.checked = centerLockMode;
             }
         }
-
+        MouseArea{
+            id: mouseLockArea
+            anchors.fill: webEngineView
+            z:100
+            onPressed: {
+                console.log("check op lock");
+                mouse.accepted = false;
+                centerLock.checked = false;
+            }
+        }
         WebEngineView {
             id: webEngineView
             webChannel: myWebChannel
 
             anchors {
                 fill: parent 
-                bottomMargin: zoomSlider.height
+                bottomMargin: zoomSlider.height + units.gu(6)
                 topMargin: header.height
             }
 
             url: "index.html"
+
         }
         Slider{
 
@@ -95,12 +105,14 @@ MainView {
             minimumValue: 3
             stepSize: 1
             value: 16
-            width: parent.width - centerLock.width
+            width: parent.width - centerLock.width - units.gu(5)
             anchors {
-                bottom: parent.bottom 
-                bottomMargin: units.gu(2)
-//                topMargin: header.height
+                verticalCenter: centerLock.verticalCenter
+                left: parent.left
+                leftMargin: units.gu(2)
+                
             }
+            onValueChanged: qtObject.refresh()
 
         }
         Switch{
@@ -109,8 +121,8 @@ MainView {
             checked: true
             anchors{
                 bottom: parent.bottom 
-                bottomMargin: units.gu(2)
-                left: zoomSlider.right
+                bottomMargin: units.gu(4)
+                right: parent.right
                 rightMargin: units.gu(2)
             }
         }
