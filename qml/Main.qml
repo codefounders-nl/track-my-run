@@ -75,7 +75,16 @@ MainView {
                 centerLock.checked = centerLockMode;
             }
         }
-
+        MouseArea{
+            id: mouseLockArea
+            anchors.fill: webEngineView
+            z:100
+            onPressed: {
+                console.log("check op lock");
+                mouse.accepted = false;
+                centerLock.checked = false;
+            }
+        }
         WebEngineView {
             id: webEngineView
             webChannel: myWebChannel
@@ -87,6 +96,7 @@ MainView {
             }
 
             url: "index.html"
+
         }
         Slider{
 
@@ -101,6 +111,7 @@ MainView {
                 bottomMargin: units.gu(2)
 //                topMargin: header.height
             }
+            onValueChanged: qtObject.refresh()
 
         }
         Switch{
