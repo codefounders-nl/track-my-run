@@ -41,27 +41,14 @@
                 .openOn(map);
             
         }
-        counter = 0;
-        tc = 0;
-        function onMapMove(e){
-            if(counter != 0){
-//                myObj.centerLockMode = false;
-            }
-            document.getElementById("logsvf").innerHTML = "er is gemoved"+myObj.centerLockMode+"-"+counter+">>tc:"+tc+ "-evt:";
-            counter = 1;
-            tc++;
-        }
         map.on('click', onMapClick);    
-        map.on('moveend', onMapMove);
         
         myObj.onRefresh.connect(function(){
             document.getElementById("longtitude").innerHTML = "Longtitude: " + myObj.longtitude;
             document.getElementById("latitude").innerHTML = "Latitude: " + myObj.latitude;
             locationmarker.setLatLng([myObj.latitude, myObj.longtitude]);
             locationmarker.redraw();
-            if(myObj.centerLockMode){
-                map.setView([myObj.latitude, myObj.longtitude],myObj.zoomFactor);
-            }
+            map.setView([myObj.latitude, myObj.longtitude],myObj.zoomFactor);
             L.circle([myObj.latitude, myObj.longtitude], {radius:1}).addTo(map);
         })
 
