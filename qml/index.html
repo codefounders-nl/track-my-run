@@ -48,7 +48,9 @@
             document.getElementById("latitude").innerHTML = "Latitude: " + myObj.latitude;
             locationmarker.setLatLng([myObj.latitude, myObj.longtitude]);
             locationmarker.redraw();
-            map.setView([myObj.latitude, myObj.longtitude],myObj.zoomFactor);
+           // if(myObj.centerLock){
+                map.setView([myObj.latitude, myObj.longtitude],myObj.zoomFactor);
+           // }
             L.circle([myObj.latitude, myObj.longtitude], {radius:1}).addTo(map);
         })
 
