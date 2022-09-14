@@ -50,6 +50,8 @@
 //];
 // LEANDRO WIJ HOREN JOU
         function startDrawingLine(lon, lat){
+            document.getElementById("logsvf").innerHTML += "lon"+lon+"--lat:"+lat+"<br>";
+
             var latlngs = [
                 [51.43, 5.47],
                 [lon, lat]
@@ -58,14 +60,16 @@
             //map.fitBounds(polyline.getBounds());
         }
         myObj.onRefresh.connect(function(){
-            document.getElementById("longtitude").innerHTML = ">"+refreshCount++ + "< Longtitude: " + myObj.longtitude;
+            document.getElementById("longitude").innerHTML = ">"+refreshCount++ + "< Longitude: " + myObj.longitude;
             document.getElementById("latitude").innerHTML = "Latitude: " + myObj.latitude;
-            locationmarker.setLatLng([myObj.latitude, myObj.longtitude]);
+            locationmarker.setLatLng([myObj.latitude, myObj.longitude]);
             locationmarker.redraw();
-           // if(myObj.centerLock){
-                map.setView([myObj.latitude, myObj.longtitude],myObj.zoomFactor);
-           // }
-            L.circle([myObj.latitude, myObj.longtitude], {radius:1}).addTo(map);
+            startDrawingLine(myObj.longitude, myObj.latitude);
+            if(myObj.centerLockMode){
+                map.setView([myObj.latitude, myObj.longitude],myObj.zoomFactor);
+            }
+           document.getElementById("logsvf").innerHTML += "go"+myObj.centerLockMode+"<br>";
+            L.circle([myObj.latitude, myObj.longitude], {radius:1}).addTo(map);
         })
 
     })
@@ -75,7 +79,7 @@
         font-size: xx-large;
     }
 </style>
-<span id="longtitude" class="groot">Longtitude: ...</span>
+<span id="longitude" class="groot">Longitude: ...</span>
 <span id="latitude" class="groot">Latitude: ...</span>
-<span id="logsvf"></span>
 <div id="map" style="width: 100%; height: 80%;"></div>
+<span id="logsvf"></span>

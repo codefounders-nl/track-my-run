@@ -63,12 +63,12 @@ MainView {
             signal onRefresh()
 
             property int zoomFactor : zoomSlider.value
-            property double longtitude : geoposition.position.coordinate.longitude
+            property double longitude : geoposition.position.coordinate.longitude
             property double latitude : geoposition.position.coordinate.latitude
             property bool centerLockMode : centerLock.checked
 
             onZoomFactorChanged: onRefresh()
-            onLongtitudeChanged: onRefresh()
+            onLongitudeChanged: onRefresh()
             onLatitudeChanged: onRefresh()
             onCenterLockModeChanged: {
                 onRefresh();
