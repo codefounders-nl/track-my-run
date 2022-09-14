@@ -7,6 +7,8 @@
         var myObj = channel.objects.qtObject;
 
         var map = L.map('map').setView([51.505, -0.09], 13);
+        var routePoints = []; 
+        var routeLine = L.polyline([], {color: 'purple'}).addTo(map);
 
         var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
@@ -43,28 +45,18 @@
         }
         map.on('click', onMapClick);    
         let refreshCount = 0;  /// debug
-
-//        var latlngs = [
- //   [51.43, 5.47],
-   // [51.77, 5.12]
-//];
-// LEANDRO WIJ HOREN JOU
-        function startDrawingLine(lon, lat){
+        function startDrawingLine(lat, lon){
             document.getElementById("logsvf").innerHTML += "lon"+lon+"--lat:"+lat+"<br>";
-
-            var latlngs = [
-                [51.43, 5.47],
-                [lon, lat]
-            ];
-            var polyline = L.polyline(latlngs, {color: 'purple'}).addTo(map);
+            routeLine.addLatLng([lat, lon]);
             //map.fitBounds(polyline.getBounds());
         }
+        //startDrawingLine(51.0, 5.0);
         myObj.onRefresh.connect(function(){
             document.getElementById("longitude").innerHTML = ">"+refreshCount++ + "< Longitude: " + myObj.longitude;
             document.getElementById("latitude").innerHTML = "Latitude: " + myObj.latitude;
             locationmarker.setLatLng([myObj.latitude, myObj.longitude]);
             locationmarker.redraw();
-            startDrawingLine(myObj.longitude, myObj.latitude);
+            startDrawingLine(myObj.latitude, myObj.longitude);
             if(myObj.centerLockMode){
                 map.setView([myObj.latitude, myObj.longitude],myObj.zoomFactor);
             }
