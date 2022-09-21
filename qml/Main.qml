@@ -34,6 +34,8 @@ MainView {
     width: units.gu(45)
     height: units.gu(75)
 
+
+
     Page {
         anchors.fill: parent
 
@@ -51,6 +53,18 @@ MainView {
             active: true
             preferredPositioningMethods: PositionSource.SatellitePositioningMethods
             updateInterval:1000
+            onPositionChanged:{
+                qtObject.trackingDataArray.push({
+                    "lat":geoposition.position.coordinate.latitude,
+                    "lon":geoposition.position.coordinate.longitude,
+                    "time": Date.now()
+                });
+                console.log("HET WERKT");
+                console.log(geoposition.position.coordinate.latitude);
+                console.log(qtObject.trackingDataArray.length);
+               qtObject.trackingDataArray = qtObject.trackingDataArray;
+//                qtObject.refresh();
+            }
         }
 
         WebChannel {
@@ -66,6 +80,7 @@ MainView {
             property double longitude : geoposition.position.coordinate.longitude
             property double latitude : geoposition.position.coordinate.latitude
             property bool centerLockMode : centerLock.checked
+            property var trackingDataArray : [{"lat":51.2,"lon":52.2,"time":Date.now()}]
 
             onZoomFactorChanged: onRefresh()
             onLongitudeChanged: onRefresh()
@@ -74,6 +89,7 @@ MainView {
                 onRefresh();
                 centerLock.checked = centerLockMode;
             }
+            
         }
         MouseArea{
             id: mouseLockArea
@@ -103,7 +119,7 @@ MainView {
             id: zoomSlider
             maximumValue: 25
             minimumValue: 3
-            stepSize: 1
+            stepSize: 0.1
             value: 16
             width: parent.width - centerLock.width - units.gu(5)
             anchors {
