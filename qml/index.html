@@ -15,8 +15,8 @@
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
 
-        var marker = L.marker([55.5, -0.09]).addTo(map)
-            .bindPopup('<b>Hello world!</b><br />I am a popup.').openPopup();
+    //    var marker = L.marker([55.5, -0.09]).addTo(map)
+      //      .bindPopup('<b>Hello world!</b><br />I am a popup.').openPopup();
 
         var locationmarker = L.circle([51.508, -0.11], {
             color: 'red',
@@ -25,25 +25,25 @@
             radius: 100
         }).addTo(map).bindPopup('I am a circle.');
 
-        var polygon = L.polygon([
-            [51.509, -0.08],
-            [51.503, -0.06],
-            [51.51, -0.047]
-        ]).addTo(map).bindPopup('I am a polygon.');
+        // var polygon = L.polygon([
+        //     [51.509, -0.08],
+        //     [51.503, -0.06],
+        //     [51.51, -0.047]
+        // ]).addTo(map).bindPopup('I am a polygon.');
 
-        var popup = L.popup()
-            .setLatLng([51.043, -0.09])
-            .setContent('I am a standalone popup.')
-            .openOn(map);
+        // var popup = L.popup()
+        //     .setLatLng([51.043, -0.09])
+        //     .setContent('I am a standalone popup.')
+        //     .openOn(map);
 
-        function onMapClick(e) {
-            popup
-                .setLatLng(e.latlng)
-                .setContent('You clicked the map at ' + e.latlng.toString())
-                .openOn(map);
+        // function onMapClick(e) {
+        //     popup
+        //         .setLatLng(e.latlng)
+        //         .setContent('You clicked the map at ' + e.latlng.toString())
+        //         .openOn(map);
             
-        }
-        map.on('click', onMapClick);    
+        // }
+        //map.on('click', onMapClick);    
         let refreshCount = 0;  /// debug
         function startDrawingLine(lat, lon){
             document.getElementById("logsvf").innerHTML += "lon"+lon+"--lat:"+lat+"<br>";
@@ -61,7 +61,7 @@
                 map.setView([myObj.latitude, myObj.longitude],myObj.zoomFactor);
             }
            document.getElementById("logsvf").innerHTML += "go"+myObj.centerLockMode+"<br>";
-            L.circle([myObj.latitude, myObj.longitude], {radius:1}).addTo(map);
+       //     L.circle([myObj.latitude, myObj.longitude], {radius:1}).addTo(map);
         })
 
     })
