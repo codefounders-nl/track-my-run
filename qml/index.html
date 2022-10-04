@@ -7,16 +7,14 @@
         var myObj = channel.objects.qtObject;
 
         var map = L.map('map').setView([51.505, -0.09], 13);
-        var routePoints = []; 
-        var routeLine = L.polyline([], {color: 'purple', weight: 15, opacity: 0.6}).addTo(map);
 
         var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
 
-    //    var marker = L.marker([55.5, -0.09]).addTo(map)
-      //      .bindPopup('<b>Hello world!</b><br />I am a popup.').openPopup();
+        var marker = L.marker([55.5, -0.09]).addTo(map)
+            .bindPopup('<b>Hello world!</b><br />I am a popup.').openPopup();
 
         var locationmarker = L.circle([51.508, -0.11], {
             color: 'red',
@@ -25,60 +23,40 @@
             radius: 100
         }).addTo(map).bindPopup('I am a circle.');
 
-        // var polygon = L.polygon([
-        //     [51.509, -0.08],
-        //     [51.503, -0.06],
-        //     [51.51, -0.047]
-        // ]).addTo(map).bindPopup('I am a polygon.');
+        var polygon = L.polygon([
+            [51.509, -0.08],
+            [51.503, -0.06],
+            [51.51, -0.047]
+        ]).addTo(map).bindPopup('I am a polygon.');
 
-        // var popup = L.popup()
-        //     .setLatLng([51.043, -0.09])
-        //     .setContent('I am a standalone popup.')
-        //     .openOn(map);
+        var popup = L.popup()
+            .setLatLng([51.043, -0.09])
+            .setContent('I am a standalone popup.')
+            .openOn(map);
 
-        // function onMapClick(e) {
-        //     popup
-        //         .setLatLng(e.latlng)
-        //         .setContent('You clicked the map at ' + e.latlng.toString())
-        //         .openOn(map);
-            
-        // }
-        //map.on('click', onMapClick);    
-        let refreshCount = 0;  /// debug
-        function startDrawingLine(){
-//            document.getElementById("logsvf").innerHTML += "lon"+myObj.longitude+"--lat:"+myObj.latitude+"<br>";
-  //          document.getElementById("logsvf").innerHTML += myObj.trackingDataArray.length +"<br>";
-            routeLine.addLatLng([myObj.trackingDataArray[0].lat, 52.3]);
-//            routeLine.addLatLng([myObj.trackingDataArray[0].lat, myObj.trackingDataArray[0].lon]);
-            //map.fitBounds(polyline.getBounds());
+        function onMapClick(e) {
+            popup
+                .setLatLng(e.latlng)
+                .setContent('You clicked the map at ' + e.latlng.toString())
+                .openOn(map);
         }
-        //startDrawingLine(51.0, 5.0);
-        myObj.onRefresh.connect(function(){
-            document.getElementById("logsvf").innerHTML += JSON.stringify(myObj.trackingDataArray) +"<br>";
-           // var punten = [[52,5],[53,6],[54,7]] 
-           // L.polyline(punten, {color:'blue'}).addTo(map);
-           // document.getElementById("longitude").innerHTML = ">"+refreshCount++ + "< Longitude: " + myObj.longitude;
-           // document.getElementById("latitude").innerHTML = "Latitude: " + myObj.latitude;
-           // locationmarker.setLatLng([myObj.latitude, myObj.longitude]);
-            locationmarker.setRadius(110 - (4 * myObj.zoomFactor));
-            locationmarker.redraw();
 
-            startDrawingLine();
-            if(myObj.centerLockMode){
-            //    map.setView([myObj.latitude, myObj.longitude],myObj.zoomFactor);
-            }
-           document.getElementById("logsvf").innerHTML += "go"+myObj.centerLockMode+"<br>";
-       //     L.circle([myObj.latitude, myObj.longitude], {radius:1}).addTo(map);
+        map.on('click', onMapClick);    
+
+        myObj.longtitudeChanged.connect(function(){
+            document.getElementById("longtitude").innerHTML = "Longtitude: " + myObj.longtitude;
+            locationmarker.setLatLng([myObj.latitude, myObj.longtitude]);
+            locationmarker.redraw();
+            map.setView([myObj.latitude, myObj.longtitude],16);
         })
 
+        myObj.latitudeChanged.connect(function(){
+            document.getElementById("latitude").innerHTML = "Latitude: " + myObj.latitude;
+        })
     })
 </script>
-<style>
-    .groot{
-        font-size: xx-large;
-    }
-</style>
-<span id="longitude" class="groot">Longitude: ...</span>
-<span id="latitude" class="groot">Latitude: ...</span>
+
+<span id="longtitude">Longtitude: ...</span>
+<span id="latitude">Latitude: ...</span>
+
 <div id="map" style="width: 100%; height: 80%;"></div>
-<span id="logsvf"></span>
