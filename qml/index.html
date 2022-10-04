@@ -55,7 +55,8 @@
         //startDrawingLine(51.0, 5.0);
         myObj.onRefresh.connect(function(){
             document.getElementById("logsvf").innerHTML += JSON.stringify(myObj.trackingDataArray) +"<br>";
-
+           // var punten = [[52,5],[53,6],[54,7]] 
+           // L.polyline(punten, {color:'blue'}).addTo(map);
            // document.getElementById("longitude").innerHTML = ">"+refreshCount++ + "< Longitude: " + myObj.longitude;
            // document.getElementById("latitude").innerHTML = "Latitude: " + myObj.latitude;
            // locationmarker.setLatLng([myObj.latitude, myObj.longitude]);

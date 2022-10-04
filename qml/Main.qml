@@ -54,15 +54,24 @@ MainView {
             preferredPositioningMethods: PositionSource.SatellitePositioningMethods
             updateInterval:1000
             onPositionChanged:{
-                qtObject.trackingDataArray.push({
-                    "lat":geoposition.position.coordinate.latitude,
-                    "lon":geoposition.position.coordinate.longitude,
-                    "time": Date.now()
-                });
-                console.log("HET WERKT");
-                console.log(geoposition.position.coordinate.latitude);
-                console.log(qtObject.trackingDataArray.length);
-               qtObject.trackingDataArray = qtObject.trackingDataArray;
+                let coordinateObject = {}
+                coordinateObject.lat = geoposition.position.coordinate.latitude;
+                coordinateObject.lon = geoposition.position.coordinate.longitude;
+                let theTime = Date.now();
+                coordinateObject.time = theTime
+                coordinateObject.delayed = checkIfTimeIsTooLong(coordinateObject, qtObject.trackingDataArray);
+
+
+
+                if(checkIfNeedToAddCoordObject(coordinateObject, qtObject.trackingDataArray)){
+                    qtObject.trackingDataArray.push(coordinateObject);
+                    qtObject.trackingDataArray = qtObject.trackingDataArray;
+                }else{
+                    qtObject.trackingDataArray[qtObject.trackingDataArray.length - 1].time = theTime;
+                }
+//                console.log("HET WERKT");
+//                console.log(geoposition.position.coordinate.latitude);
+ //               console.log(qtObject.trackingDataArray.length);
 //                qtObject.refresh();
             }
         }
@@ -77,8 +86,10 @@ MainView {
             signal onRefresh()
 
             property int zoomFactor : zoomSlider.value
-            property double longitude : geoposition.position.coordinate.longitude
-            property double latitude : geoposition.position.coordinate.latitude
+//            property double longitude : geoposition.position.coordinate.longitude
+//            property double latitude : geoposition.position.coordinate.latitude
+            property double longitude:0
+             property double latitude:0
             property bool centerLockMode : centerLock.checked
             property var trackingDataArray : [{"lat":51.2,"lon":52.2,"time":Date.now()}]
 
@@ -97,7 +108,7 @@ MainView {
             z:100
             onPressed: {
                 console.log("check op lock");
-                mouse.accepted = false;
+ //               mouse.accepted = false;
                 centerLock.checked = false;
             }
         }
@@ -142,5 +153,31 @@ MainView {
                 rightMargin: units.gu(2)
             }
         }
+    }
+    function checkIfTimeIsTooLong(newCoordinateObject, trackingArray){
+        console.log("in time check >>"+newCoordinateObject.time+"<<>>"+trackingArray[trackingArray.length -1].time);
+        let difference = newCoordinateObject.time - trackingArray[trackingArray.length -1].time;
+        console.log(difference);
+        if(difference > 25000){
+            console.log("DELAYED IS");
+            return true;
+        }
+        return false;
+    }
+    function checkIfNeedToAddCoordObject(newCoordinateObject, trackingArray){
+        let n = newCoordinateObject; let t = trackingArray;
+        let distancegpslon = Math.pow((trackingArray[trackingArray.length -1].lon - newCoordinateObject.lon),2);
+        let distancegpslat = Math.pow((trackingArray[trackingArray.length -1].lat - newCoordinateObject.lat),2);
+        let distance = Math.sqrt(distancegpslat + distancegpslon);
+//        if(distance < 0.00001 || distance > 0.1){  // we vermoeden 1 meter OR 10 km
+        if(distance < 0.000005){
+
+            return false;
+        }
+//        console.log("in checking to add"+n.lon+"<<>>"+t[t.length-1].lon);
+//        console.log(distancegpslon+"<<-->>"+distancegpslat);
+//        console.log(distance);
+
+        return true;
     }
 }
