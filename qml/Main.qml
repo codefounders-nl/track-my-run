@@ -58,12 +58,24 @@ MainView {
                 let theTime = Date.now();
                 coordinateObject.time = theTime
                 coordinateObject.delayed = checkIfTimeIsTooLong(coordinateObject, qtObject.trackingDataArray);
+                if(coordinateObject.delayed){
+                    qtObject.walkingDataArray.push([]);
+                }
+                
                 if(checkIfNeedToAddCoordObject(coordinateObject, qtObject.trackingDataArray)){
                     qtObject.trackingDataArray.push(coordinateObject);
                     qtObject.trackingDataArray = qtObject.trackingDataArray;
+                    var lineDataArray = [];
+                    lineDataArray.push(coordinateObject.lat);
+                    lineDataArray.push(coordinateObject.lon);
+                    if(coordinateObject.lat == null){}else{
+                    qtObject.walkingDataArray[qtObject.walkingDataArray.length - 1].push(lineDataArray);
+                    }
                 }else{
                     qtObject.trackingDataArray[qtObject.trackingDataArray.length - 1].time = theTime;
+
                 }
+                qtObject.walkingDataArray = qtObject.walkingDataArray;
             }
         }
 
@@ -81,6 +93,9 @@ MainView {
             property double latitude : geoposition.position.coordinate.latitude
             property bool centerLockMode : centerLock.checked
             property var trackingDataArray : [{"lat":51.2,"lon":52.2,"time":Date.now()}]
+            property var interruptionDataArray : []
+            property var walkingDataArray : [[]]
+            
 
             onZoomFactorChanged: onRefresh()
             onLongitudeChanged: onRefresh()
@@ -143,9 +158,9 @@ MainView {
         }
     }
         function checkIfTimeIsTooLong(newCoordinateObject, trackingArray){
-        console.log("in time check >>"+newCoordinateObject.time+"<<>>"+trackingArray[trackingArray.length -1].time);
+//        console.log("in time check >>"+newCoordinateObject.time+"<<>>"+trackingArray[trackingArray.length -1].time);
         let difference = newCoordinateObject.time - trackingArray[trackingArray.length -1].time;
-        console.log(difference);
+//        console.log(difference);
         if(difference > 25000){
             console.log("DELAYED IS");
             return true;
@@ -153,6 +168,9 @@ MainView {
         return false;
     }
     function checkIfNeedToAddCoordObject(newCoordinateObject, trackingArray){
+        if(newCoordinateObject.lon == null || newCoordinateObject.lat == null){
+            return false;
+        }
         let n = newCoordinateObject; let t = trackingArray;
         let distancegpslon = Math.pow((trackingArray[trackingArray.length -1].lon - newCoordinateObject.lon),2);
         let distancegpslat = Math.pow((trackingArray[trackingArray.length -1].lat - newCoordinateObject.lat),2);
