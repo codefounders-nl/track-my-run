@@ -51,6 +51,20 @@ MainView {
             active: true
             preferredPositioningMethods: PositionSource.SatellitePositioningMethods
             updateInterval:1000
+            onPositionChanged:{
+                let coordinateObject = {}
+                coordinateObject.lat = geoposition.position.coordinate.latitude;
+                coordinateObject.lon = geoposition.position.coordinate.longitude;
+                let theTime = Date.now();
+                coordinateObject.time = theTime
+                coordinateObject.delayed = checkIfTimeIsTooLong(coordinateObject, qtObject.trackingDataArray);
+                if(checkIfNeedToAddCoordObject(coordinateObject, qtObject.trackingDataArray)){
+                    qtObject.trackingDataArray.push(coordinateObject);
+                    qtObject.trackingDataArray = qtObject.trackingDataArray;
+                }else{
+                    qtObject.trackingDataArray[qtObject.trackingDataArray.length - 1].time = theTime;
+                }
+            }
         }
 
         WebChannel {
@@ -66,6 +80,7 @@ MainView {
             property double longitude : geoposition.position.coordinate.longitude
             property double latitude : geoposition.position.coordinate.latitude
             property bool centerLockMode : centerLock.checked
+            property var trackingDataArray : [{"lat":51.2,"lon":52.2,"time":Date.now()}]
 
             onZoomFactorChanged: onRefresh()
             onLongitudeChanged: onRefresh()
@@ -126,5 +141,26 @@ MainView {
                 rightMargin: units.gu(2)
             }
         }
+    }
+        function checkIfTimeIsTooLong(newCoordinateObject, trackingArray){
+        console.log("in time check >>"+newCoordinateObject.time+"<<>>"+trackingArray[trackingArray.length -1].time);
+        let difference = newCoordinateObject.time - trackingArray[trackingArray.length -1].time;
+        console.log(difference);
+        if(difference > 25000){
+            console.log("DELAYED IS");
+            return true;
+        }
+        return false;
+    }
+    function checkIfNeedToAddCoordObject(newCoordinateObject, trackingArray){
+        let n = newCoordinateObject; let t = trackingArray;
+        let distancegpslon = Math.pow((trackingArray[trackingArray.length -1].lon - newCoordinateObject.lon),2);
+        let distancegpslat = Math.pow((trackingArray[trackingArray.length -1].lat - newCoordinateObject.lat),2);
+        let distance = Math.sqrt(distancegpslat + distancegpslon);
+//        if(distance < 0.00001 || distance > 0.1){  // we vermoeden 1 meter OR 10 km
+        if(distance < 0.000005){
+            return false;
+        }
+        return true;
     }
 }
