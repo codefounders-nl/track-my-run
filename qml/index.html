@@ -8,7 +8,7 @@
 
         var map = L.map('map').setView([51.505, -0.09], 13);
         var routePoints = []; 
-        var routeLine = L.polyline([], {color: 'purple'}).addTo(map);
+        var routeLine = L.polyline([], {color: 'green'}).addTo(map);
 
         var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
@@ -27,14 +27,19 @@
             routeLine.addLatLng([lat, lon]);
         }
         function drawDebugData(dedata, headerdata){
-            document.getElementById("logsvf").innerHTML += JSON.stringify(dedata) +"<hr>";
+//            document.getElementById("logsvf").innerHTML = JSON.stringify(dedata) +"<hr>";
             document.getElementById("longitude").innerHTML = ">"+refreshCount++ + "< Longitude: " + myObj.longitude;
         }
+        var pl;
         myObj.onRefresh.connect(function(){
             drawDebugData(JSON.stringify(myObj.walkingDataArray), ">"+refreshCount++ + "< Longitude: " + myObj.longitude);
             locationmarker.setLatLng([myObj.latitude, myObj.longitude]);
             locationmarker.redraw();
             startDrawingLine(myObj.latitude, myObj.longitude);
+            if(!pl){
+                pl.remove(map);
+            }
+            pl = L.polyline(myObj.walkingDataArray, {color: 'orange'}).addTo(map);
             if(myObj.centerLockMode){
                 map.setView([myObj.latitude, myObj.longitude],myObj.zoomFactor);
             }

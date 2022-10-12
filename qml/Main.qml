@@ -68,9 +68,7 @@ MainView {
                     var lineDataArray = [];
                     lineDataArray.push(coordinateObject.lat);
                     lineDataArray.push(coordinateObject.lon);
-                    if(coordinateObject.lat == null){}else{
                     qtObject.walkingDataArray[qtObject.walkingDataArray.length - 1].push(lineDataArray);
-                    }
                 }else{
                     qtObject.trackingDataArray[qtObject.trackingDataArray.length - 1].time = theTime;
 
@@ -110,7 +108,7 @@ MainView {
             anchors.fill: webEngineView
             z:100
             onPressed: {
-                console.log("check op lock");
+               // console.log("check op lock");
                 mouse.accepted = false;
                 centerLock.checked = false;
             }
@@ -142,7 +140,7 @@ MainView {
                 leftMargin: units.gu(2)
                 
             }
-            onValueChanged: qtObject.refresh()
+//            onValueChanged: qtObject.refresh()
 
         }
         Switch{
@@ -168,7 +166,7 @@ MainView {
         return false;
     }
     function checkIfNeedToAddCoordObject(newCoordinateObject, trackingArray){
-        if(newCoordinateObject.lon == null || newCoordinateObject.lat == null){
+        if( isNaN(newCoordinateObject.lon) || isNaN(newCoordinateObject.lat) || newCoordinateObject.lat == null || newCoordinateObject.lon == null ){
             return false;
         }
         let n = newCoordinateObject; let t = trackingArray;
