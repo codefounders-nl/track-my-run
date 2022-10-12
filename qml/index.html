@@ -36,7 +36,7 @@
             locationmarker.setLatLng([myObj.latitude, myObj.longitude]);
             locationmarker.redraw();
             startDrawingLine(myObj.latitude, myObj.longitude);
-            if(!pl){
+            if(pl){
                 pl.remove(map);
             }
             pl = L.polyline(myObj.walkingDataArray, {color: 'orange'}).addTo(map);
