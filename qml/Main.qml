@@ -147,7 +147,7 @@ MainView {
         Button {
             id: buttonToSendNFC
             Layout.alignment: Qt.AlignHCenter
-            text: i18n.tr('Send Text')
+            text: i18n.tr('Send')
             onClicked: {
                 console.log('voor service listen');
                 Service.startService( 'een bericht' )
@@ -161,14 +161,7 @@ MainView {
             }
         }
 
-        Connections {
-            target: Reader
-            onBytesReceived: {
-                //receivedText = bytes
-                console.log("het is in COnnection received")
-                console.log(bytes)
-            }
-        }
+
 
 
         Text{
@@ -209,6 +202,14 @@ MainView {
                 right: parent.right
                 rightMargin: units.gu(2)
             }
+        }
+    }
+    Connections {
+        target: Reader
+        onBytesReceived: {
+            //receivedText = bytes
+            console.log("het is in COnnection received")
+            console.log(bytes)
         }
     }
         function checkIfTimeIsTooLong(newCoordinateObject, trackingArray){
