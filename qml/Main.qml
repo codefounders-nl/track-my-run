@@ -128,6 +128,7 @@ MainView {
 
         }
         Button {
+            id: buttonToReceiveNFC
             Layout.alignment: Qt.AlignHCenter
             text: i18n.tr('Receive text!')
             onClicked: {
@@ -138,6 +139,22 @@ MainView {
                 bottom: centerLock.top 
                 bottomMargin: units.gu(4)
                 right: rfidtestdata.left
+                rightMargin: units.gu(2)
+            }
+        }
+        Button {
+            id: buttonToSendNFC
+            Layout.alignment: Qt.AlignHCenter
+            text: i18n.tr('Send Text')
+            onClicked: {
+                rfidtestdata.text = 'andere knop';
+                Service.startService( rfidtestdata.text)
+                 rfidtestdata.text = 'hoi'
+            }
+            anchors{
+                bottom: centerLock.top 
+                bottomMargin: units.gu(4)
+                right: buttonToReceiveNFC.left
                 rightMargin: units.gu(2)
             }
         }

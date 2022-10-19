@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trackmyrun.slft\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-19 17:44+0000\n"
+"POT-Creation-Date: 2022-10-19 18:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,6 +21,10 @@ msgstr ""
 msgid "Track My Run"
 msgstr ""
 
-#: ../qml/Main.qml:132
+#: ../qml/Main.qml:133
 msgid "Receive text!"
+msgstr ""
+
+#: ../qml/Main.qml:148
+msgid "Send Text"
 msgstr ""
