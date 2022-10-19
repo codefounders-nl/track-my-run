@@ -52,6 +52,7 @@ MainView {
             preferredPositioningMethods: PositionSource.SatellitePositioningMethods
             updateInterval:1000
             onPositionChanged:{
+//                rfidtestdata.text = 'doei';
                 let coordinateObject = {}
                 coordinateObject.lat = geoposition.position.coordinate.latitude;
                 coordinateObject.lon = geoposition.position.coordinate.longitude;
@@ -126,6 +127,31 @@ MainView {
             url: "index.html"
 
         }
+        Button {
+            Layout.alignment: Qt.AlignHCenter
+            text: i18n.tr('Receive text!')
+            onClicked: {
+                rfidtestdata.text = 'doei';
+                Reader.listenService()
+            }
+            anchors{
+                bottom: centerLock.top 
+                bottomMargin: units.gu(4)
+                right: rfidtestdata.left
+                rightMargin: units.gu(2)
+            }
+        }
+        Text{
+            id: rfidtestdata
+            text:'test'
+            anchors{
+                bottom: centerLock.top 
+                bottomMargin: units.gu(4)
+                right: parent.right
+                rightMargin: units.gu(2)
+            }
+        }
+        
         Slider{
 
             id: zoomSlider

@@ -3,7 +3,8 @@
         "networking",
         "webview",
         "sensors",
-        "location"
+        "location",
+        "nfc"
     ],
     "policy_version": 16.04
 }
