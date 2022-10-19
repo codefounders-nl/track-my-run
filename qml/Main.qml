@@ -158,6 +158,17 @@ MainView {
                 rightMargin: units.gu(2)
             }
         }
+
+        Connections {
+            target: Reader
+            onBytesReceived: {
+                //receivedText = bytes
+                console.log("het is in COnnection received")
+                console.log(bytes)
+            }
+        }
+
+
         Text{
             id: rfidtestdata
             text:'test'
