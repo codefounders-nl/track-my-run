@@ -148,7 +148,7 @@ MainView {
             text: i18n.tr('Send Text')
             onClicked: {
                 rfidtestdata.text = 'andere knop';
-                Service.startService( rfidtestdata.text)
+                Service.startService( 'een bericht' )
                  rfidtestdata.text = 'hoi'
             }
             anchors{
