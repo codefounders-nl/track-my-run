@@ -133,7 +133,9 @@ MainView {
             text: i18n.tr('Receive text!')
             onClicked: {
                 rfidtestdata.text = 'doei';
+                console.log('voor reader listen');
                 Reader.listenService()
+                console.log('na reader listen');
             }
             anchors{
                 bottom: centerLock.top 
@@ -147,9 +149,9 @@ MainView {
             Layout.alignment: Qt.AlignHCenter
             text: i18n.tr('Send Text')
             onClicked: {
-                rfidtestdata.text = 'andere knop';
+                console.log('voor service listen');
                 Service.startService( 'een bericht' )
-                 rfidtestdata.text = 'hoi'
+                console.log('na service listen');
             }
             anchors{
                 bottom: centerLock.top 
